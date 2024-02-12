@@ -1,9 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
-
+import blog from './blog';
 function App() {
   return (
-    <h1>Happy Join</h1>
+    <blog/>
   );
 }
 
