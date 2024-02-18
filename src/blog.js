@@ -9,7 +9,7 @@ const Blog = () => {
     const [formData, setFormData] = useState({
         title: '',
         description: '',
-        datetime: new Date().toDateString()
+        datetime: ''
     });
 
     const fetchBlogData = async () => {
@@ -25,7 +25,8 @@ const Blog = () => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
-            [name]: value
+            [name]: value,
+            datetime: new Date().toDateString()
         });
     }
 
@@ -39,6 +40,7 @@ const Blog = () => {
                 title: '',
                 description: ''
             });
+            
         } catch (error) {
             console.error('Error submitting form:', error);
         }
@@ -54,6 +56,8 @@ const Blog = () => {
                 description: ''
                 
             });
+            setBolgId(null)
+            setIsUpdating(false)
         }catch (error) {
                 console.error('Error submitting form:', error);
             }
