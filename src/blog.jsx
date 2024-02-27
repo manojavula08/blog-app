@@ -14,7 +14,7 @@ const Blog = () => {
 
     const fetchBlogData = async () => {
         try {
-            const response = await api.get('/blog/');
+            const response = await api.get('/getAll_blog/');
             setBlog(response.data);
         } catch (error) {
             console.error('Error fetching blog data:', error);

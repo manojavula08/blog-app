@@ -1,9 +1,14 @@
-import logo from './logo.svg';
+
+import { Outlet } from 'react-router-dom';
 import './App.css';
-import Blog from './blog';
+import Navbar from './components/navbar/Navbar/Navbar';
 function App() {
   return (
-    <Blog/>
+    <>
+      <Navbar />
+      <Outlet />
+    </>
+    
   );
 }
 
