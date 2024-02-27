@@ -1,7 +1,7 @@
 
 import { Outlet } from 'react-router-dom';
 import './App.css';
-import Navbar from './components/navbar/Navbar/Navbar';
+import Navbar from './components/Navbar/Navbar';
 function App() {
   return (
     <>
