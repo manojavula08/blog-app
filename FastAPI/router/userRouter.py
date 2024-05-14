@@ -12,7 +12,7 @@ from passlib.hash import bcrypt
 
 SECRET_KEY = "manoj"
 ALGORITHM = "HS256"
-EXPIRE_TIME_DELTA = 15
+EXPIRE_TIME_DELTA = 100
 
 router = APIRouter(tags=['User'], prefix='/auth')
 oauthSchema = OAuth2PasswordBearer(tokenUrl='/auth/token')
@@ -22,7 +22,7 @@ def create_access_token(data: dict, expires_delta: datetime.timedelta = None):
     if expires_delta:
         expire = datetime.datetime.utcnow() + expires_delta
     else:
-        expire = datetime.datetime.utcnow() + datetime.timedelta(minutes=15)
+        expire = datetime.datetime.utcnow() + datetime.timedelta(minutes=50)
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return dict(access_token = encoded_jwt, token_type= 'bearer')
@@ -69,17 +69,12 @@ def register(
 
 @router.post("/token")
 async def login_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    print(f'userId: {form_data.username}, Password: {form_data.password}')
     user = authenticate_user( form_data.username, form_data.password, db)
-    print(f'userId: {form_data.username}, Password: {form_data.password} check1')
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password")
-    print(f'userId: {form_data.username}, Password: {form_data.password} check2')
     access_token = create_access_token(
         data={"id": user.id}, expires_delta=datetime.timedelta(minutes=EXPIRE_TIME_DELTA)
     )
-    
-    print(f'{access_token}:------check3')
     return access_token
 
 async def get_current_user(db: Session = Depends(get_db), token: str = Depends(oauthSchema)):
