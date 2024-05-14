@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import api from "./api";
+import Api from "./pages/Api";
 
 const Blog = () => {
     const [blog, setBlog] = useState([]);
@@ -14,7 +14,7 @@ const Blog = () => {
 
     const fetchBlogData = async () => {
         try {
-            const response = await api.get('/getAll_blog/');
+            const response = await Api.get('blog/getAll-blog/');
             setBlog(response.data);
         } catch (error) {
             console.error('Error fetching blog data:', error);
@@ -34,7 +34,7 @@ const Blog = () => {
         e.preventDefault();
         
         try {
-            await api.post('/blog/', formData);
+            await Api.post('blog/write-blog', formData);
             await fetchBlogData();
             setFormData({
                 title: '',
@@ -49,7 +49,7 @@ const Blog = () => {
     const UpdateOnSubmit = async (e) =>{
         e.preventDefault()
         try{
-            await api.put('/edit_blog/'+ blogID, formData)
+            await Api.put('blog/edit-blog/'+ blogID, formData)
             await fetchBlogData()
             setFormData({
                 title: '',
@@ -76,7 +76,7 @@ const Blog = () => {
     const handleUpdateId = async (inputID) =>{
 
         console.log(inputID)
-        const response = await api.get('/blog/'+inputID)
+        const response = await Api.get('blog/write-blog'+inputID)
         const blogData = response.data
         setFormData({
             title: blogData.title,
@@ -89,7 +89,7 @@ const Blog = () => {
 
     const handleDeleteId = async (blogId) => {
         try {
-            await api.delete('/delete/'+ blogId);
+            await Api.delete('/delete/'+ blogId);
             console.log("deleted")
             await fetchBlogData();
         } catch (error) {

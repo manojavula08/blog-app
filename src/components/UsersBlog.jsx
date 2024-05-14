@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import { useState, useEffect, Link } from "react"
+import { GetToken } from "../pages/Token"
 
-import { Link } from 'react-router-dom'
-import { GetToken } from '../../pages/Token'
-const AllBlogs = () =>{
+const UsersBlog = () => {
+
     const [blogs, setBlogs] = useState([])
     const fetchBlogData = async () =>{
         try{
-            const response =  await fetch('http://localhost:8000/blog/getAll-blogs/',
+            const response =  await fetch('http://localhost:8000/blog/getAllUsersblogs/',
         {
             method: 'GET',
             headers: {
@@ -24,7 +24,7 @@ const AllBlogs = () =>{
     useEffect(()=>{
         fetchBlogData()
     },[])
-    
+    console.log(blogs)
     return (
         <div className="container mx-auto py-8 ">
             <h1 className="text-3xl font-semibold mb-8 text-center">Latest Blogs</h1>
@@ -34,6 +34,7 @@ const AllBlogs = () =>{
                 <div className="p-4">
                     <h2 className="text-2xl font-semibold mb-2">{blog.title}</h2>
                     <p className="text-gray-600 mb-4">{blog.description}</p>
+                    <p className="text-gray-600 mb-4">{ " Owner Id: "+blog.owner_id}</p>
                     <div className="flex items-center justify-between text-sm text-gray-500">
                     <div className="flex items-center">
                         <img
@@ -46,14 +47,7 @@ const AllBlogs = () =>{
                     <span>{'Last modified: '+blog.datetime}</span>
                     </div>
                 </div>
-                <div className="p-4 bg-gray-100 border-t border-gray-200">
-                    <Link
-                    to={`/edit-blog/${blog.id}`}
-                    className="text-blue-500 hover:text-blue-700 font-semibold"
-                    >
-                    Read More
-                    </Link>
-                </div>
+                
                 </div>
             </div>
             ))}
@@ -61,4 +55,4 @@ const AllBlogs = () =>{
         );
 }
 
-export default AllBlogs
+export default UsersBlog

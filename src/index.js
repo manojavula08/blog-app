@@ -1,30 +1,84 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
+import 'tailwindcss/tailwind.css';
+import App from './App'
+import { createBrowserRouter, 
+  RouterProvider } from 
+    'react-router-dom';
 import AllBlogs from './components/AllBlogs/AllBlogs';
-import Blog from './blog'
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path='/' element={<App />}>
-      <Route path='' element={<Blog />} />
-      <Route path='getAll_blog' element={<AllBlogs />}/>
-    </Route>
-  )
-)
+import EditBlog from './pages/EditBlog';
+import AuthPage, {action as authAction1} from './pages/AuthAction'
+import BlogWrite, {action as Write} from './pages/Write-blog';
+import {action as Logout} from './pages/Logout';
+import {checkAuthToken} from './pages/Token'
+import ErrorPage from './pages/Error';
+import {action as UpdateBlog} from './pages/ApiUpdates'
+import UsersBlog from './components/UsersBlog';
+import Register,{action as rAction} from './components/Register';
+const router = createBrowserRouter([
+  {
+    path:'/',
+    element: <App />,
+    errorElement:<ErrorPage />,
+    children:[
+      {
+        index: true, 
+        element:<UsersBlog />,
+        loader: checkAuthToken
+      },
+      {
+        path:'my-profile',
+        element: <AllBlogs />,
+        loader: checkAuthToken
+      },
+      {
+        path:'write-blog',
+        element: <BlogWrite />,
+        action: Write,
+        loader: checkAuthToken
+      },
+      {
+        path: 'edit-blog',
+        loader: checkAuthToken,
+        children:[
+          {
+            path: ':id',
+            index: true,
+            element:<EditBlog />,
+            action: UpdateBlog,
+            loader: checkAuthToken
+          }
+        ]
+        
+      },
+      
+    ]
+  },
+  {
+    path: '/auth',
+    element: <AuthPage />,
+    action: authAction1,
+    children:[
+      {
+        path: 'logout',
+        action: Logout
+      }
+    ]
+  },
+  {
+    path: '/register',
+    element: <Register />,
+    action:rAction
+  }
+  
+]
+);
 
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>
+  
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
