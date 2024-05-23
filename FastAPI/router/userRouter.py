@@ -54,7 +54,6 @@ def register(
     db: Session = Depends(get_db)
 ):
     hashed_password = bcrypt.hash(user_form.password)
-    print(hashed_password)
     user_data = models.User(
         firstName=user_form.firstName,
         lastName=user_form.lastName,
