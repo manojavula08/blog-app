@@ -1,11 +1,11 @@
 import sys
 import statistics
 sys.path.append("...")
-from schemas.blogPath import Blog, Blog_model
+from FastAPI.schemas.blogPath import Blog, Blog_model
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import session
-import models
-from database import get_db
+from FastAPI import models
+from FastAPI.database import get_db
 from .userRouter import get_current_user
 router = APIRouter(tags=["BlogData"], prefix='/blog')
 

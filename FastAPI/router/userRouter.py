@@ -3,10 +3,10 @@ sys.path.append('...')
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 import jwt
-from database import get_db
+from FastAPI.database import get_db
 from sqlalchemy.orm import Session
-from schemas.auth import Create_user, User, login_, Users_models
-import models
+from FastAPI.schemas.auth import Create_user, User, login_, Users_models
+from FastAPI import models
 import datetime
 from passlib.hash import bcrypt
 
