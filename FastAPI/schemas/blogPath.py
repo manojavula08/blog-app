@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-
+## SCHEMAS
 class Blog_model(BaseModel):
     title: str
     description: str
