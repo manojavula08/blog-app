@@ -17,6 +17,8 @@ def read_all_blog(db: session = Depends(get_db),
     blog_data = db.query(models.Blog).filter(models.Blog.owner_id == current_user.id).all()
     return blog_data
 
+
+
 @router.get("/getAllUsersblogs/", response_model= list[Blog])
 def read_all_blog(db: session = Depends(get_db),current_user: models.User = Depends(get_current_user)):
     if not current_user:
