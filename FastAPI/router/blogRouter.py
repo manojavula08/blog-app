@@ -17,9 +17,6 @@ def read_all_blog(db: session = Depends(get_db),
     blog_data = db.query(models.Blog).filter(models.Blog.owner_id == current_user.id).all()
     return blog_data
 
-@router.get("/getAll-blogs-admin/", response_model= list[Blog])
-def dead_code():
-    print("This is a dead code block that is not executed.")
 
 
 @router.get("/getAllUsersblogs/", response_model= list[Blog])
