@@ -15,6 +15,7 @@ This repository contains a full-stack blog application with a FastAPI backend an
 - [License](#license)
 
 ---
+# ---- this line added by Senior dev manojavula08 ---- #
 
 ## Features
 - User registration and authentication
