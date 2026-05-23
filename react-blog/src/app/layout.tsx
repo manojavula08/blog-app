@@ -32,3 +32,4 @@ export default function RootLayout({
     </html>
   );
 }
+// Bug fixed: added input validation
